@@ -3,7 +3,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable", "ES2015.Collection", "ES2015.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "ES2015.Collection", "ES2015.Iterable", "ES2015.Core", "ES2015.Promise"],
     "module": "ESNext",
     "types": ["vite/client"],
     "skipLibCheck": true,
@@ -22,7 +22,8 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "esModuleInterop": true
   },
   "include": ["client/src", "client/postcss.config.js", "server/server.js"]
 }
