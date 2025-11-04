@@ -11,7 +11,7 @@
   },
   "av_bsf_alloc": {
     "full_size": 31,
-    "covered_lines": 31,
+    "covered_lines": 22,
     "apidoc": "int av_bsf_alloc(const AVBitStreamFilter *filter, AVBSFContext **ctx)\nBrief: Allocate a context for a given bitstream filter.\nDetails: The caller must fill in the context parameters as described in the documentation and then call  av_bsf_init()  before sending any data to the filter.\nfilter \n \n \n the filter for which to allocate an instance.  \n \n \n \n \n ctx \n \n \n a pointer into which the pointer to the newly-allocated context will be written. It must be freed with  av_bsf_free()  after the filtering is done. \n \n \n \n 0 on success, a negative AVERROR code on failure"
   },
   "av_bsf_flush": {
@@ -587,7 +587,7 @@
   },
   "avcodec_parameters_copy": {
     "full_size": 19,
-    "covered_lines": 10,
+    "covered_lines": 19,
     "apidoc": "int avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src)\nBrief: Copy the contents of src to dst.\nDetails: Any allocated fields in dst are freed and replaced with newly allocated duplicates of the corresponding fields in src.\n>= 0 on success, a negative AVERROR code on failure."
   },
   "avcodec_parameters_free": {
@@ -752,7 +752,7 @@
   },
   "av_guess_frame_rate": {
     "full_size": 13,
-    "covered_lines": 0,
+    "covered_lines": 13,
     "apidoc": "AVRational av_guess_frame_rate(AVFormatContext *ctx, AVStream *stream, struct AVFrame *frame)\nBrief: Guess the frame rate, based on both the container and codec information.\nDetails: ctx \n \n \n the format context which the stream is part of  \n \n \n \n \n stream \n \n \n the stream which the frame is part of  \n \n \n \n \n frame \n \n \n the frame for which the frame rate should be determined, may be NULL  \n \n \n \n the guessed (valid) frame rate, 0/1 if no idea"
   },
   "av_guess_sample_aspect_ratio": {
@@ -832,7 +832,7 @@
   },
   "av_probe_input_format3": {
     "full_size": 57,
-    "covered_lines": 40,
+    "covered_lines": 36,
     "apidoc": "const AVInputFormat * av_probe_input_format3(const AVProbeData *pd, int is_opened, int *score_ret)\nBrief: Guess the file format.\nDetails: is_opened \n \n \n Whether the file is already opened; determines whether demuxers with or without AVFMT_NOFILE are probed.  \n \n \n \n \n score_ret \n \n \n The score of the best detection."
   },
   "av_program_add_stream_index": {
@@ -983,7 +983,7 @@
   },
   "avformat_init_output": {
     "full_size": 9,
-    "covered_lines": 5,
+    "covered_lines": 9,
     "apidoc": "av_warn_unused_result int avformat_init_output(AVFormatContext *s, AVDictionary **options)\nBrief: Allocate the stream private data and initialize the codec, but do not write the header.\nDetails: May optionally be used before  avformat_write_header()  to initialize stream parameters before actually writing the header. If using this function, do not pass the same options to  avformat_write_header() .\ns \n \n \n Media file handle, must be allocated with  avformat_alloc_context() . Its  oformat  field must be set to the desired output format; Its  pb  field must be set to an already opened  AVIOContext .  \n \n \n \n \n options \n \n \n An  AVDictionary  filled with  AVFormatContext  and muxer-private options. On return this parameter will be destroyed and replaced with a dict containing options that were not found. May be NULL. \n \n \n \n \n \n AVSTREAM_INIT_IN_WRITE_HEADER \n \n \n On success, if the codec requires avformat_write_header to fully initialize.  \n \n \n \n \n AVSTREAM_INIT_IN_INIT_OUTPUT \n \n \n On success, if the codec has been fully initialized.  \n \n \n \n \n AVERROR \n \n \n Anegative AVERROR on failure. \n \n \n \n av_opt_find ,  av_dict_set ,  avio_open , av_oformat_next,  avformat_write_header ."
   },
   "avformat_license": {
@@ -1342,7 +1342,7 @@
   },
   "avio_write": {
     "full_size": 15,
-    "covered_lines": 7,
+    "covered_lines": 15,
     "apidoc": "void avio_write(AVIOContext *s, const unsigned char *buf, int size)"
   },
   "avio_write_marker": {
@@ -1517,7 +1517,7 @@
   },
   "av_aes_ctr_set_full_iv": {
     "full_size": 5,
-    "covered_lines": 4,
+    "covered_lines": 5,
     "apidoc": "void av_aes_ctr_set_full_iv(struct AVAESCTR *a, const uint8_t *iv)\nBrief: Forcefully change the \"full\" 16-byte iv, including the counter."
   },
   "av_aes_ctr_set_iv": {
@@ -4945,16 +4945,6 @@
   "avfilter_version": {
     "full_size": 3,
     "covered_lines": 3,
-    "apidoc": "unsigned avfilter_version(void)\nBrief: Return the LIBAVFILTER_VERSION_INT constant."
-  },
-    "avfilter_process_command_update": {
-    "full_size": 14,
-    "covered_lines": 10,
-    "apidoc": "int avfilter_process_command(AVFilterContext *filter, const char *cmd, const char *arg, char *res, int res_len, int flags)\nBrief: Make the filter instance process a command.\nDetails: It is recommended to use  avfilter_graph_send_command() ."
-  },
-  "avfilter_version_update": {
-    "full_size": 3,
-    "covered_lines": 0,
     "apidoc": "unsigned avfilter_version(void)\nBrief: Return the LIBAVFILTER_VERSION_INT constant."
   }
 }

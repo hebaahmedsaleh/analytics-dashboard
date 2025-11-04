@@ -52,7 +52,6 @@ function calculateSummary(allCoverage, allUsage) {
         totalCoverage += (api.covered_lines / api.full_size) * 100;
         count++;
       }
-      console.log({ usage });
       
       if (usage) totalCalls += parseInt(usage.usage_count, 10) || 0;
     }
@@ -105,6 +104,120 @@ app.get("/api/summary", async (req, res) => {
     res.json(summary);
   } catch (err) {
     console.error("🔥 Error in /api/summary:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+// Dedicated API for Coverage vs Usage scatter plot
+app.get("/api/coverage-usage", async (req, res) => {
+  try {
+    const { date } = req.query;
+    if (!date) return res.status(400).json({ error: "Missing date" });
+
+    const coveragePath = path.join(dataDir, `api_coverage_${date}.json`);
+    const usagePath = path.join(dataDir, `api_usage_${date}.json`);
+
+    const cov = fs.existsSync(coveragePath)
+      ? JSON.parse(fs.readFileSync(coveragePath, "utf8"))
+      : {};
+    const use = fs.existsSync(usagePath)
+      ? JSON.parse(fs.readFileSync(usagePath, "utf8"))
+      : [];
+
+    const scatterData = [];
+
+    Object.keys(cov).forEach((name) => {
+      const api = cov[name];
+      const coveragePercent = (api.covered_lines / api.full_size) * 100;
+      const usageItem = use.find((u) => u.api_name === name);
+      const usageCount = usageItem ? Number(usageItem.usage_count) : 0;
+
+      scatterData.push({ name, coverage: coveragePercent, usage: usageCount });
+    });
+
+    res.json({ data: scatterData });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.get("/api/coverage-trends", async (req, res) => {
+  try {
+    const { start, end } = req.query;
+    if (!start || !end) return res.status(400).json({ error: "Missing start or end date" });
+
+    const inRange = generateDateRange(start, end);
+
+    const trends= [];
+
+    for (const date of inRange) {
+      const coveragePath = path.join(dataDir, `api_coverage_${date}.json`);
+      if (!fs.existsSync(coveragePath)) continue;
+
+      const cov = JSON.parse(fs.readFileSync(coveragePath, "utf8"));
+      const apiNames = Object.keys(cov);
+
+      if (apiNames.length === 0) continue;
+
+      let totalCoverage = 0;
+      apiNames.forEach((name) => {
+        const api = cov[name];
+        totalCoverage += (api.covered_lines / api.full_size) * 100;
+      });
+
+      trends.push({
+        date,
+        avgCoverage: totalCoverage / apiNames.length,
+      });
+    }
+
+    res.json({ data: trends });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+app.get("/api/apis", async (req, res) => {
+  try {
+    const { date } = req.query;
+    if (!date) return res.status(400).json({ error: "Missing date" });
+
+    const coveragePath = path.join(dataDir, `api_coverage_${date}.json`);
+    const usagePath = path.join(dataDir, `api_usage_${date}.json`);
+
+    const cov = fs.existsSync(coveragePath)
+      ? JSON.parse(fs.readFileSync(coveragePath, "utf8"))
+      : {};
+    const use = fs.existsSync(usagePath)
+      ? JSON.parse(fs.readFileSync(usagePath, "utf8"))
+      : [];
+
+    const data = Object.keys(cov).map((name) => {
+      const api = cov[name];
+      const usageItem = use.find((u) => u.api_name === name);
+      const usageCount = usageItem ? Number(usageItem.usage_count) : 0;
+      const totalClients = usageItem ? Number(usageItem.total_clients) : 0;
+
+      return {
+        name,
+        coverage: ((api.covered_lines / api.full_size) * 100).toFixed(1),
+        usage: usageCount,
+        totalClients,
+        apidoc: api.apidoc,
+        fullSize: api.full_size,
+        coveredLines: api.covered_lines,
+      };
+    });
+
+    res.json({ data });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

@@ -4946,5 +4946,20 @@
     "full_size": 3,
     "covered_lines": 3,
     "apidoc": "unsigned avfilter_version(void)\nBrief: Return the LIBAVFILTER_VERSION_INT constant."
+  },
+    "avfilter_version_update": {
+    "full_size": 3,
+    "covered_lines": 3,
+    "apidoc": "unsigned avfilter_version(void)\nBrief: Return the LIBAVFILTER_VERSION_INT constant."
+  },
+    "av_bsf_flush_update": {
+    "full_size": 7,
+    "covered_lines": 5,
+    "apidoc": "void av_bsf_flush(AVBSFContext *ctx)\nBrief: Reset the internal bitstream filter state.\nDetails: Should be called e.g. when seeking."
+  },
+  "av_bsf_free_update": {
+    "full_size": 16,
+    "covered_lines": 16,
+    "apidoc": "void av_bsf_free(AVBSFContext **ctx)\nBrief: Free a bitstream filter context and everything associated with it; write NULL into the supplied pointer."
   }
 }

@@ -16,7 +16,7 @@
   },
   "av_bsf_flush": {
     "full_size": 7,
-    "covered_lines": 5,
+    "covered_lines": 7,
     "apidoc": "void av_bsf_flush(AVBSFContext *ctx)\nBrief: Reset the internal bitstream filter state.\nDetails: Should be called e.g. when seeking."
   },
   "av_bsf_free": {
@@ -41,7 +41,7 @@
   },
   "av_bsf_init": {
     "full_size": 20,
-    "covered_lines": 12,
+    "covered_lines": 20,
     "apidoc": "int av_bsf_init(AVBSFContext *ctx)\nBrief: Prepare the filter for use, after all the parameters and options have been set.\nDetails: ctx \n \n \n a  AVBSFContext  previously allocated with  av_bsf_alloc()"
   },
   "av_bsf_iterate": {
@@ -71,7 +71,7 @@
   },
   "av_bsf_list_free": {
     "full_size": 7,
-    "covered_lines": 0,
+    "covered_lines": 7,
     "apidoc": "void av_bsf_list_free(AVBSFList **lst)\nBrief: Free list of bitstream filters.\nDetails: lst \n \n \n Pointer to pointer returned by  av_bsf_list_alloc()"
   },
   "av_bsf_list_parse_str": {
@@ -86,7 +86,7 @@
   },
   "av_bsf_send_packet": {
     "full_size": 16,
-    "covered_lines": 14,
+    "covered_lines": 16,
     "apidoc": "int av_bsf_send_packet(AVBSFContext *ctx, AVPacket *pkt)\nBrief: Submit a packet for filtering.\nDetails: After sending each packet, the filter must be completely drained by calling  av_bsf_receive_packet()  repeatedly until it returns  AVERROR(EAGAIN)  or AVERROR_EOF.\nctx \n \n \n an initialized  AVBSFContext   \n \n \n \n \n pkt \n \n \n the packet to filter. The bitstream filter will take ownership of the packet and reset the contents of pkt. pkt is not touched if an error occurs. If pkt is empty (i.e. NULL, or pkt->data is NULL and pkt->side_data_elems zero), it signals the end of the stream (i.e. no more non-empty packets will be sent; sending more empty packets does nothing) and will cause the filter to output any packets it may have buffered internally. \n \n \n \n \n 0 on success. \n AVERROR(EAGAIN)  if packets need to be retrieved from the filter (using  av_bsf_receive_packet() ) before new input can be consumed. \n Another negative AVERROR value if an error occurs."
   },
   "av_codec_is_decoder": {
@@ -257,7 +257,7 @@
   },
   "av_packet_from_data": {
     "full_size": 7,
-    "covered_lines": 1,
+    "covered_lines": 7,
     "apidoc": "int av_packet_from_data(AVPacket *pkt, uint8_t *data, int size)\nBrief: Initialize a reference-counted packet from  av_malloc() ed data.\nDetails: pkt \n \n \n packet to be initialized. This function will set the data, size, and buf fields, all others are left untouched.  \n \n \n \n \n data \n \n \n Data allocated by  av_malloc()  to be used as packet data. If this function returns successfully, the data is owned by the underlying AVBuffer. The caller may not access the data through other means.  \n \n \n \n \n size \n \n \n size of data in bytes, without the padding. I.e. the full buffer size is assumed to be size + AV_INPUT_BUFFER_PADDING_SIZE. \n \n \n \n 0 on success, a negative AVERROR on error"
   },
   "av_packet_get_side_data": {
@@ -272,7 +272,7 @@
   },
   "av_packet_make_writable": {
     "full_size": 15,
-    "covered_lines": 0,
+    "covered_lines": 15,
     "apidoc": "int av_packet_make_writable(AVPacket *pkt)\nBrief: Create a writable reference for the data described by a given packet, avoiding data copy if possible.\nDetails: pkt \n \n \n Packet whose data should be made writable. \n \n \n \n 0 on success, a negative AVERROR on failure. On failure, the packet is unchanged."
   },
   "av_packet_move_ref": {
@@ -302,7 +302,7 @@
   },
   "av_packet_shrink_side_data": {
     "full_size": 7,
-    "covered_lines": 0,
+    "covered_lines": 7,
     "apidoc": "int av_packet_shrink_side_data(AVPacket *pkt, enum AVPacketSideDataType type, size_t size)\nBrief: Shrink the already allocated side data buffer.\nDetails: pkt \n \n \n packet  \n \n \n \n \n type \n \n \n side information type  \n \n \n \n \n size \n \n \n new side information size  \n \n \n \n 0 on success, < 0 on failure"
   },
   "av_packet_side_data_add": {
@@ -322,7 +322,7 @@
   },
   "av_packet_side_data_name": {
     "full_size": 40,
-    "covered_lines": 7,
+    "covered_lines": 40,
     "apidoc": "const char * av_packet_side_data_name(enum AVPacketSideDataType type)"
   },
   "av_packet_side_data_new": {
@@ -332,7 +332,7 @@
   },
   "av_packet_side_data_remove": {
     "full_size": 10,
-    "covered_lines": 0,
+    "covered_lines": 10,
     "apidoc": "void av_packet_side_data_remove(AVPacketSideData *sd, int *nb_sd, enum AVPacketSideDataType type)\nBrief: Remove side data of the given type from a side data array.\nDetails: sd \n \n \n the array from which the side data should be removed  \n \n \n \n \n nb_sd \n \n \n pointer to an integer containing the number of entries in the array. Will be reduced by the amount of entries removed upon return  \n \n \n \n \n type \n \n \n side information type"
   },
   "av_packet_unpack_dictionary": {
@@ -382,27 +382,27 @@
   },
   "av_vorbis_parse_frame_flags": {
     "full_size": 30,
-    "covered_lines": 0,
+    "covered_lines": 30,
     "apidoc": "int av_vorbis_parse_frame_flags(AVVorbisParseContext *s, const uint8_t *buf, int buf_size, int *flags)\nBrief: Get the duration for a Vorbis packet.\nDetails: If  flags  is  NULL , special frames are considered invalid.\ns \n \n \n Vorbis parser context  \n \n \n \n \n buf \n \n \n buffer containing a Vorbis frame  \n \n \n \n \n buf_size \n \n \n size of the buffer  \n \n \n \n \n flags \n \n \n flags for special frames"
   },
   "av_vorbis_parse_free": {
     "full_size": 3,
-    "covered_lines": 0,
+    "covered_lines": 3,
     "apidoc": "void av_vorbis_parse_free(AVVorbisParseContext **s)\nBrief: Free the parser and everything associated with it."
   },
   "av_vorbis_parse_init": {
     "full_size": 9,
-    "covered_lines": 0,
+    "covered_lines": 9,
     "apidoc": "AVVorbisParseContext * av_vorbis_parse_init(const uint8_t *extradata, int extradata_size)\nBrief: Allocate and initialize the Vorbis parser using headers in the extradata."
   },
   "av_vorbis_parse_reset": {
     "full_size": 4,
-    "covered_lines": 0,
+    "covered_lines": 4,
     "apidoc": "void av_vorbis_parse_reset(AVVorbisParseContext *s)"
   },
   "av_xiphlacing": {
     "full_size": 9,
-    "covered_lines": 0,
+    "covered_lines": 9,
     "apidoc": "unsigned int av_xiphlacing(unsigned char *s, unsigned int v)\nBrief: Encode extradata length to a buffer.\nDetails: Used by xiph codecs.\ns \n \n \n buffer to write to; must be at least (v/255+1) bytes long  \n \n \n \n \n v \n \n \n size of extradata in bytes  \n \n \n \n number of bytes written to the buffer."
   },
   "avcodec_align_dimensions": {
@@ -4946,20 +4946,5 @@
     "full_size": 3,
     "covered_lines": 3,
     "apidoc": "unsigned avfilter_version(void)\nBrief: Return the LIBAVFILTER_VERSION_INT constant."
-  },
-    "avfilter_version_update": {
-    "full_size": 3,
-    "covered_lines": 3,
-    "apidoc": "unsigned avfilter_version(void)\nBrief: Return the LIBAVFILTER_VERSION_INT constant."
-  },
-    "av_bsf_flush_update": {
-    "full_size": 7,
-    "covered_lines": 5,
-    "apidoc": "void av_bsf_flush(AVBSFContext *ctx)\nBrief: Reset the internal bitstream filter state.\nDetails: Should be called e.g. when seeking."
-  },
-  "av_bsf_free_update": {
-    "full_size": 16,
-    "covered_lines": 16,
-    "apidoc": "void av_bsf_free(AVBSFContext **ctx)\nBrief: Free a bitstream filter context and everything associated with it; write NULL into the supplied pointer."
   }
 }

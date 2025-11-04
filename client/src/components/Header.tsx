@@ -1,11 +1,8 @@
-import React from "react";
+import * as React from "react";
+import { useDateRange } from "../context/date-range-context";
 
-interface HeaderProps {
-  dateRange: { start: string; end: string };
-  onChangeDateRange: (range: { start: string; end: string }) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ dateRange, onChangeDateRange }) => {
+const Header: React.FC = () => {
+  const { dateRange, setDateRange } = useDateRange();
   return (
     <header className="flex flex-col sm:flex-row justify-between items-center bg-white shadow-sm border border-gray-100 rounded-2xl px-6 py-4">
       {/* Title */}
@@ -19,18 +16,14 @@ const Header: React.FC<HeaderProps> = ({ dateRange, onChangeDateRange }) => {
           <input
             type="date"
             value={dateRange.start}
-            onChange={(e) =>
-              onChangeDateRange({ ...dateRange, start: e.target.value })
-            }
+            onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
             className="bg-transparent text-sm text-gray-700 focus:outline-none"
           />
           <span className="text-gray-400 text-sm">to</span>
           <input
             type="date"
             value={dateRange.end}
-            onChange={(e) =>
-              onChangeDateRange({ ...dateRange, end: e.target.value })
-            }
+            onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
             className="bg-transparent text-sm text-gray-700 focus:outline-none"
           />
         </div>
