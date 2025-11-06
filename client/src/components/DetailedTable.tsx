@@ -31,6 +31,10 @@ const VirtualizedDetailedTable: React.FC = () => {
 
   const parentRef = useRef<HTMLDivElement>(null);
 
+   const API_URL = import.meta.env.PROD 
+  ? '/api'  // Production: uses Netlify redirects
+  : 'http://localhost:8000/api'; 
+
   // helper to parse coverage values like "85%" -> 85
   const parseNumeric = (v: any) => {
     if (v == null) return 0;
@@ -47,7 +51,7 @@ const VirtualizedDetailedTable: React.FC = () => {
       setError(null);
       
       try {
-        const res = await fetch(`/api/apis?date=${dateRange.start}`);
+        const res = await fetch(`${API_URL}/apis?date=${dateRange.start}`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setData(data.data || []);

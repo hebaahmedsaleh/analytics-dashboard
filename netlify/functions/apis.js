@@ -1,10 +1,10 @@
-import express from "express";
-import fs from "fs";
-import path from "path";
-import cors from "cors";
+const express = require('express');
+const serverless = require('serverless-http');
 
-const PORT = process.env.SERVER_SIDE_PORT || 8000;
+const app = express();
+const router = express.Router();
 
+// Your API route
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -65,7 +65,7 @@ function calculateSummary(allCoverage, allUsage) {
 }
 
 // 📡 Endpoint: /summary?start=YYYY-MM-DD&end=YYYY-MM-DD
-app.get("/api/summary", async (req, res) => {
+router.get("/summary", async (req, res) => {
   try {
     console.log("Request received at backend!", req.query);
     const { start, end } = req.query;
@@ -110,7 +110,7 @@ app.get("/api/summary", async (req, res) => {
 
 
 // Dedicated API for Coverage vs Usage scatter plot
-app.get("/api/coverage-usage", async (req, res) => {
+router.get("/coverage-usage", async (req, res) => {
   try {
     const { date } = req.query;
     if (!date) return res.status(400).json({ error: "Missing date" });
@@ -144,7 +144,7 @@ app.get("/api/coverage-usage", async (req, res) => {
 });
 
 
-app.get("/api/coverage-trends", async (req, res) => {
+router.get("/coverage-trends", async (req, res) => {
   try {
     const { start, end } = req.query;
     if (!start || !end) return res.status(400).json({ error: "Missing start or end date" });
@@ -183,7 +183,7 @@ app.get("/api/coverage-trends", async (req, res) => {
 
 
 
-app.get("/api/apis", async (req, res) => {
+router.get("/apis", async (req, res) => {
   try {
     const { date } = req.query;
     if (!date) return res.status(400).json({ error: "Missing date" });
@@ -222,4 +222,7 @@ app.get("/api/apis", async (req, res) => {
   }
 });
 
+app.use('/api', router);
+
+// Export as serverless function
 exports.handler = serverless(app);

@@ -1,0 +1,19 @@
+[build]
+  # Build command
+  command = "npm run build"
+  # Publish directory (Vite builds to client/dist)
+  publish = "client/dist"
+  # Functions directory for serverless backend
+  functions = "netlify/functions"
+
+# Redirect API calls to serverless functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
