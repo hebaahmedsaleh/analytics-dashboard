@@ -36,7 +36,10 @@ npm install
 
 This installs the small root dev dependency (`concurrently`) and any other top-level dev deps. Note: you may still need to run `npm install` inside `client/` if you prefer managing client deps separately.
 
-3. Start servers
+3. Add .env file as .env.example
+
+
+4. Start servers
 
 The repository includes a root `start` script that launches both the backend and frontend concurrently. From the repository root run:
 
