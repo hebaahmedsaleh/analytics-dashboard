@@ -24,7 +24,7 @@ const CoverageUsageScatter: React.FC<ScatterPlotProps> = ({ data }) => {
   const CustomTooltip = ({
     active,
     payload,
-    label,
+
   }: any) => {
     if (active && payload && payload.length) {
       const point = payload[0].payload as ScatterPoint;

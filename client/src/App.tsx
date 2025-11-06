@@ -4,11 +4,10 @@ import { Header, SummaryCards, ScatterChartWithDateSelector, CoverageTrendsChart
 import './App.css';
 import { useDateRange } from './context/date-range-context';
 import DetailedTable from './components/DetailedTable';
-import { ErrorBoundary } from './common/ErrorBoundary';
 
 function App() {
   
-  const { dateRange, setDateRange } = useDateRange();
+  const { dateRange } = useDateRange();
   
 
   return (

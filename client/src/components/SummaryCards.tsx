@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SummaryCardsProps {
   dateRange: { start: string; end: string };

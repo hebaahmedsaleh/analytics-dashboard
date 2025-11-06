@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useDateRange } from "../context/date-range-context";
 import { FiltersPanel } from "./FiltersPanel";
-import { TableRowSkeleton, FiltersSkeleton } from "./Skeletons";
-import { useFilterState, FilterState } from "../hooks/useFilterState";
+import { TableRowSkeleton } from "./Skeletons";
+import { useFilterState } from "../hooks/useFilterState";
 
 interface APIData {
   name: string;
