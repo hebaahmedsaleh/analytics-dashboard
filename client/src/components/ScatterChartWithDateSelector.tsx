@@ -7,6 +7,10 @@ const ScatterChartWithDateSelector = () => {
   const [scatterData, setScatterData] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState(dateRange.start);
 
+  const API_URL = import.meta.env.PROD 
+  ? '/api'  // Production: uses Netlify redirects
+  : 'https://rad-blini-e1ec7c.netlify.app/api';
+
   // Generate available dates from selected range
   useEffect(() => {
     const start = new Date(dateRange.start);
@@ -23,7 +27,7 @@ const ScatterChartWithDateSelector = () => {
   // Fetch scatter data when selected date changes
   useEffect(() => {
     if (!selectedDate) return;
-    fetch(`/api/coverage-usage?date=${selectedDate}`)
+    fetch(`${API_URL}/coverage-usage?date=${selectedDate}`)
       .then((res) => res.json())
       .then((res) => setScatterData(res.data))
       .catch((err) => console.error("Error fetching scatter data:", err));

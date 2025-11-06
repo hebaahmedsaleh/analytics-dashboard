@@ -19,10 +19,14 @@ const CoverageTrendsChart = () => {
   const { dateRange } = useDateRange();
   const [data, setData] = useState<TrendPoint[]>([]);
 
+  const API_URL = import.meta.env.PROD 
+  ? '/api'  // Production: uses Netlify redirects
+  : 'https://rad-blini-e1ec7c.netlify.app/api';// Development: points to deployed backend
+  
   useEffect(() => {
     if (!dateRange.start || !dateRange.end) return;
 
-    fetch(`/api/coverage-trends?start=${dateRange.start}&end=${dateRange.end}`)
+    fetch(`${API_URL}/coverage-trends?start=${dateRange.start}&end=${dateRange.end}`)
       .then((res) => res.json())
       .then((res) => setData(res.data))
       .catch((err) => console.error("Error fetching coverage trends:", err));

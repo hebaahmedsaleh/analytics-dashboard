@@ -38,6 +38,11 @@ const VirtualizedDetailedTable: React.FC = () => {
     return Number(v) || 0;
   };
 
+  const API_URL = import.meta.env.PROD 
+  ? '/api'  // Production: uses Netlify redirects
+  : 'https://rad-blini-e1ec7c.netlify.app/api';// Development: points to deployed backend
+
+
   // fetch data for selected start date
   useEffect(() => {
     if (!dateRange.start) return;
@@ -47,7 +52,7 @@ const VirtualizedDetailedTable: React.FC = () => {
       setError(null);
       
       try {
-        const res = await fetch(`/api/apis?date=${dateRange.start}`);
+        const res = await fetch(`${API_URL}/apis?date=${dateRange.start}`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setData(data.data || []);

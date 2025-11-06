@@ -20,14 +20,17 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({ dateRange }) => {
 
   const hasDateRange = !!(dateRange.start && dateRange.end);
 
-  
+  const API_URL = import.meta.env.PROD 
+  ? '/api'  // Production: uses Netlify redirects
+  : 'https://rad-blini-e1ec7c.netlify.app/api';// Development: points to deployed backend
+
 useEffect(() => {
   const fetchSummary = async () => {
     if (!hasDateRange) return;
     setIsLoading(true);
     try {
       const res = await fetch(
-        `/api/summary?start=${dateRange.start}&end=${dateRange.end}`
+        `${API_URL}/summary?start=${dateRange.start}&end=${dateRange.end}`
       );
       const data = await res.json();
       setSummary(data);
